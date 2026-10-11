@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Promptfoo
+.promptfoo/
+promptfoo_cache/
+output/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment & Secrets
+.env
+.env.local
+*.log
+
+# Editor
+.vscode/
+.idea/
+*.swp

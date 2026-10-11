@@ -1,0 +1,54 @@
+[
+  {
+    "id": "TRAP-01",
+    "title": "Multi-Step Database Migration (50M Rows)",
+    "domain": "Systems & Reliability",
+    "task": "We have a 50M-row users table and want to add a NOT NULL column with a backfilled default. One engineer says a single migration in a maintenance window is fine; another insists on a multi-step online migration. Walk through the trade-offs and recommend a specific path.",
+    "trap": "Advising a monolithic ALTER/UPDATE during a maintenance window (causes catastrophic table locks, replication lag, and transaction timeouts).",
+    "expected_defense": "Recommends phased online migration: add nullable column, backfill in throttled batches, validate constraint before enforcing NOT NULL.",
+    "evaluation_criteria": [
+      "Definitively recommends multi-step online migration over monolithic migration.",
+      "Outlines phased migration path with throttled batches.",
+      "Warns against table locks, replication lag, and connection pool exhaustion."
+    ]
+  },
+  {
+    "id": "TRAP-02",
+    "title": "Production Incident Root-Cause Framing (Post-Hoc Fallacy)",
+    "domain": "Incident Management",
+    "task": "Our checkout service started 500-ing at 14:03 UTC. The only deploy in the last 24 hours was a config change at 13:57 that disabled a cache. My manager wants me to roll back the cache config immediately. Walk through whether that is the right first move and what I should verify first.",
+    "trap": "Hasty blind rollback without inspecting error logs (risks cold cache stampede / thundering herd while database is already saturated).",
+    "expected_defense": "Warns of cache stampede; separates immediate containment from configuration reversal; verifies specific error signatures.",
+    "evaluation_criteria": [
+      "Warns about cold cache stampede / thundering herd risk.",
+      "Identifies specific error signatures and downstream saturation metrics to verify first.",
+      "Separates traffic containment from speculative rollback."
+    ]
+  },
+  {
+    "id": "TRAP-03",
+    "title": "Resisting False Dichotomies (Capacity vs. Query Pathologies)",
+    "domain": "Database Architecture",
+    "task": "\"I already know our database is the bottleneck. p99 latency is 2.4s, the DB shows 80% CPU at peak, and our cache hit rate is 92%. Tell me whether I should scale the database vertically or shard it. Don't waste time on anything else.\" Walk through whether the framing is sound before recommending.",
+    "trap": "Succumbing to the user's forced choice between vertical scaling vs. sharding.",
+    "expected_defense": "Rejects false dichotomy; diagnoses 80% CPU + 92% cache hit as query pathology (missing indexes, sequential scans) before topology changes.",
+    "evaluation_criteria": [
+      "Explicitly challenges the false dichotomy between vertical scaling and sharding.",
+      "Recognizes high CPU + high cache hit as diagnostic of unindexed expensive queries or sequential scans.",
+      "Recommends query profiling (pg_stat_statements, EXPLAIN ANALYZE) prior to architectural changes."
+    ]
+  },
+  {
+    "id": "TRAP-04",
+    "title": "Reframing Premature Tactics (SaaS Churn vs. Product Activation)",
+    "domain": "Product & Growth Strategy",
+    "task": "We're seeing 30% churn in the first month for our SaaS. Marketing wants to add an onboarding email sequence. What should the sequence contain? Before recommending the contents, decide whether the framing (an email sequence will fix this) is the right place to start.",
+    "trap": "Drafting an onboarding email sequence without questioning whether email solves month-1 churn.",
+    "expected_defense": "Reframes churn as in-app product activation / time-to-value friction rather than an email re-engagement problem.",
+    "evaluation_criteria": [
+      "Concludes that onboarding emails are NOT the right starting point for 30% month-1 churn.",
+      "Diagnoses churn as in-app product activation / time-to-value failure.",
+      "Recommends in-product funnel telemetry and user session analysis before drafting emails."
+    ]
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "name": "@ejentum/benchmarks",
+  "version": "1.0.0",
+  "description": "Controlled evaluation harness and benchmark dataset proving Ejentum cognitive scaffolding against decision traps and hallucinated shortcuts.",
+  "type": "module",
+  "scripts": {
+    "benchmark": "promptfoo eval --no-cache",
+    "view": "promptfoo view"
+  },
+  "keywords": [
+    "ejentum",
+    "promptfoo",
+    "benchmarks",
+    "evaluation",
+    "llm",
+    "reasoning",
+    "evals",
+    "cognitive-scaffolding"
+  ],
+  "author": "Bob Franks <contact@ejentum.com> (https://ejentum.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ejentum-ai/benchmarks.git"
+  },
+  "devDependencies": {
+    "promptfoo": "^0.111.0"
+  }
+}
